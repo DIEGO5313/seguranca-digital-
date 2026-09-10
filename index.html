@@ -1,74 +1,314 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerador de senha</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerador de Senhas</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background: linear-gradient(135deg, #0f216e 0%, #08fc00 100%);
+      min-height: 100vh;
+    }
+
+    .container {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      padding: 30px;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 28px;
+    }
+
+    .grupo-entrada {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      color: #555;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      transition: border-color 0.3s;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .controles {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin: 25px 0;
+      justify-content: center;
+    }
+
+    .tamanho-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background-color: #f0f0f0;
+      padding: 8px 15px;
+      border-radius: 4px;
+    }
+
+    .tamanho-info span {
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    #numero-senha {
+      font-weight: bold;
+      font-size: 24px;
+      min-width: 40px;
+      text-align: center;
+      color: #667eea;
+    }
+
+    button {
+      padding: 10px 16px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    button:active {
+      background-color: #004085;
+      transform: translateY(0);
+    }
+
+    .btn-ajustar {
+      width: 45px;
+      height: 45px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .botao-gerar {
+      width: 100%;
+      padding: 14px;
+      margin-top: 20px;
+      font-size: 16px;
+      background-color: #28a745;
+    }
+
+    .botao-gerar:hover {
+      background-color: #218838;
+    }
+
+    .botao-copiar {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      font-size: 14px;
+      background-color: #6c757d;
+    }
+
+    .botao-copiar:hover {
+      background-color: #5a6268;
+    }
+
+    .opcoes-senha {
+      background-color: #f9f9f9;
+      padding: 15px;
+      border-radius: 4px;
+      margin: 20px 0;
+    }
+
+    .opcao-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 10px 0;
+    }
+
+    .opcao-checkbox input[type="checkbox"] {
+      cursor: pointer;
+      width: 18px;
+      height: 18px;
+    }
+
+    .opcao-checkbox label {
+      margin: 0;
+      cursor: pointer;
+      font-weight: normal;
+    }
+
+    .mensagem {
+      text-align: center;
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 4px;
+      display: none;
+      font-size: 14px;
+    }
+
+    .mensagem.sucesso {
+      background-color: #d4edda;
+      color: #155724;
+      display: block;
+    }
+
+    .forca-senha {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 4px;
+      text-align: center;
+      font-weight: bold;
+      display: none;
+    }
+
+    .forca-senha.fraca {
+      background-color: #f8d7da;
+      color: #721c24;
+      display: block;
+    }
+
+    .forca-senha.media {
+      background-color: #fff3cd;
+      color: #856404;
+      display: block;
+    }
+
+    .forca-senha.forte {
+      background-color: #d4edda;
+      color: #155724;
+      display: block;
+    }
+  </style>
 </head>
-
 <body>
-    <section class="conteudo">
-        <div class="conteudo-titulo">
-            <img src="unlock.svg" alt="cadeado fechado">
-            <h2 class="titulo-principal">Gerador de senhas</h2>
-            <h3 class="titulo-secundario">Gere instantaneamente uma senha aleatória e segura</h3>
-        </div>
-        <div class="conteudo-senha">
-            <label for="senha">Senha</label>
-          <input name="senha" type="text" id="campo-senha" readonly>
-        </div>
-        <div class="parametro">
-            <h3 class="parametro-titulo">Personalize sua senha</h3>
-            <div class="parametro-coluna__senha">
-               <div class="parametro-senha">
-    <h4 class="parametro-senha__titulo">Número de caracteres</h4>
-    <div class="parametro-senha-botoes">
-        <button class="parametro-senha__botao">-</button>
-        <p class="parametro-senha__texto">12</p>
-        <button class="parametro-senha__botao">+</button>
-    </div>
-</div>  
-                <div class="parametro-senha">
-    <h4 class="parametro-senha__titulo">Características da senha</h4>
-    <div class="parametro-senha-checkbox">
-        <input name="maiusculo" type="checkbox" class="checkbox" checked>
-        <label for="maiusculo">Letras maiúsculas</label>
-    </div>
-    <div class="parametro-senha-checkbox">
-        <input name="minusculo" type="checkbox" class="checkbox">
-        <label for="minusculo">Letras minúsculas</label>
-    </div>
-    <div class="parametro-senha-checkbox">
-        <input name="numero" type="checkbox" class="checkbox">
-        <label for="numero">Números</label>
-    </div>
-    <div class="parametro-senha-checkbox">
-        <input name="simbolo" type="checkbox" class="checkbox">
-        <label for="simbolo">Símbolos</label>
-    </div>
-</div>
-  <div class="parametro-senha">
-    <h4 class="parametro-senha__titulo">Força da senha</h4>
-    <div class="barra"></div>
-    <div class="forca fraca"></div>
-    <div class="parametro-senha-textos">
-        <p>Fraca</p>
-        <p>Média</p>
-        <p>Forte</p>
-    </div>
-</div>
-            </div>
-        </div>
-        <script src="main.js"></script>
+  <div class="container">
+    <h1>🔐 GERADOR DE SENHAS</h1>
 
+    <div class="grupo-entrada">
+      <label for="campo-senha">Sua Senha:</label>
+      <input type="text" id="campo-senha" readonly>
+      <div id="forca-senha" class="forca-senha"></div>
+    </div>
 
+    <div class="opcoes-senha">
+      <label style="font-weight: bold; margin-bottom: 10px; display: block;">Opções:</label>
+      <div class="opcao-checkbox">
+        <input type="checkbox" id="maiusculas" checked>
+        <label for="maiusculas">Letras Maiúsculas (A-Z)</label>
+      </div>
+      <div class="opcao-checkbox">
+        <input type="checkbox" id="minusculas" checked>
+        <label for="minusculas">Letras Minúsculas (a-z)</label>
+      </div>
+      <div class="opcao-checkbox">
+        <input type="checkbox" id="numeros-check" checked>
+        <label for="numeros-check">Números (0-9)</label>
+      </div>
+      <div class="opcao-checkbox">
+        <input type="checkbox" id="especiais">
+        <label for="especiais">Caracteres Especiais (!@#$%^&*)</label>
+      </div>
+    </div>
 
+    <div class="controles">
+      <button class="btn-ajustar" onclick="diminuiTamanho()">−</button>
+      <div class="tamanho-info">
+        <span>Tamanho:</span>
+        <span id="numero-senha">8</span>
+      </div>
+      <button class="btn-ajustar" onclick="aumentaTamanho()">+</button>
+    </div>
 
+    <button class="botao-gerar" onclick="geraSenha()">
+      ↻ Gerar Nova Senha
+    </button>
 
+    <button class="botao-copiar" onclick="copiarSenha()">
+      📋 Copiar Senha
+    </button>
 
-        
-    </section>
+    <div id="mensagem" class="mensagem"></div>
+  </div>
+
+  <script src="main.js"></script>
 </body>
 </html>
+
+<button class="botao-copiar" 
+="copiarSenha()">
+      DIEGO EDUARDO DE ALENCAR N:06
+    </button>
+    </html>
+    <button class="botao-copiar" ="copiarSenha()">
+      MURILO MANOSSO N:24
+       </html>
+       <button class="botao-copiar" ="copiarSenha()">
+      TURMA:3L
+    </button>
+<!-- CACHORRO DANÇANDO -->
+<div class="cachorro-dancando">🤖</div>
+
+<style>
+.cachorro-dancando {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    font-size: 80px;
+    z-index: 9999;
+    animation: danca 0.5s infinite alternate;
+}
+
+@keyframes danca {
+    0% {
+        transform: translateY(0) rotate(-15deg);
+    }
+
+    50% {
+        transform: translateY(-25px) rotate(15deg);
+    }
+
+    100% {
+        transform: translateY(0) rotate(-15deg);
+    }
+}
+</style>
+    
+

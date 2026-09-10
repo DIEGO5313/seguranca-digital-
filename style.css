@@ -151,3 +151,25 @@ label{
     background-color: #00FF85;
     width: 100%;
 }
+.cachorro {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    font-size: 80px;
+    z-index: 9999;
+    animation: dancarCachorro 0.6s infinite alternate ease-in-out;
+}
+
+@keyframes dancarCachorro {
+    0% {
+        transform: rotate(-15deg) translateY(0);
+    }
+
+    50% {
+        transform: rotate(15deg) translateY(-15px);
+    }
+
+    100% {
+        transform: rotate(-15deg) translateY(0);
+    }
+}
